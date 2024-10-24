@@ -1,0 +1,14 @@
+# /* ex: set filetype=sh fenc=utf-8 expandtab ts=4 sw=4 : */
+
+DIR="$( cd -P "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd )"
+
+cd $DIR
+DEBIAN_VERSION=$(grep -Po '(?<=FROM debian:).*' Dockerfile)
+SNAPCAST_VERSION=$(grep -Po '(?<=ENV SNAPCAST_VERSION=).*' Dockerfile)
+TAG="shk3bq4d/snapserver:${SNAPCAST_VERSION}-${DEBIAN_VERSION}"
+
+echo "DEBIAN_VERSION is $DEBIAN_VERSION"
+echo "SNAPCAST_VERSION is $SNAPCAST_VERSION"
+echo "TAG is $TAG"
+
+docker ps &>/dev/null && SUDO= || SUDO=sudo
